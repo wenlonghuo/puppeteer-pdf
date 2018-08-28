@@ -7,7 +7,6 @@ class Browser {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       ignoreHTTPSErrors: true,
       dumpio: false,
-      executablePath: '/usr/local/share/.config/yarn/global/node_modules/puppeteer/.local-chromium/linux-571375/chrome-linux/chrome',
       ...option
     }
   }

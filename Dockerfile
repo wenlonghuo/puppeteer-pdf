@@ -6,7 +6,6 @@ COPY . /app
 USER root
 RUN apt-get update && apt-get install -y pdftk \
   && rm -rf ./node_modules/ \
-  && npm install puppeteer --ignore-scripts --registery=https://registry.npm.taobao.org \
   && npm install --registery=https://registry.npm.taobao.org
 
 USER pptruser
