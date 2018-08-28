@@ -1,0 +1,10 @@
+[
+  {
+    "name": "puppeteer-pdf",
+    "script": "app/index.js",
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "instances": 2
+  }
+]

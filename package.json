@@ -1,0 +1,21 @@
+{
+  "name": "puppeteer-pdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "dev": "nodemon ./app/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "puppeteer": "^1.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
