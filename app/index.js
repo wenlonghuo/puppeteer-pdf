@@ -3,25 +3,37 @@ const koaBody = require('koa-body')
 const router = require('koa-router')()
 const nodeUrl = require('url')
 
-const createPdf = require('./lib/pdf.js')
+const pdf = require('./lib/pdf.js')
+const createPdfBuffer = pdf.createPdfBuffer
+const createPdfFileMergedBuffer = pdf.createPdfFileMergedBuffer
 
-router.post('/pdf/create/req', async (ctx, next) => {
-  const { url, cookie, pdfOptions } = ctx.request.body
-  const hostname = nodeUrl.parse(url).hostname
-
-  const pdfBuffer = await createPdf(url, {
-    cookie: findCookie(ctx, hostname, cookie),
-    pdfOptions
+router.post('/pdf/create/files', async (ctx, next) => {
+  const { cookie, pdfOptions, list = [] } = ctx.request.body
+  const filename = encodeURIComponent(ctx.request.body.filename || 'collectionofpdf')
+  const queryList = list.map((item) => {
+    const hostname = nodeUrl.parse(item.url).hostname
+    return [
+      item.url,
+      {
+        cookie: findCookie(ctx, hostname, item.cookie || cookie || '') || [],
+        pdfOptions: item.pdfOptions || pdfOptions
+      }
+    ]
   })
-
+  const pdfBuffer = await createPdfFileMergedBuffer(queryList)
+  ctx.set({
+    'Content-Type': 'application/pdf',
+    'Content-Disposition': `attachment;filename="${filename}.pdf"`,
+    'Content-Length': `${pdfBuffer.length}`
+  })
   ctx.body = pdfBuffer
 })
 
 router.get('/pdf/create/download', async (ctx, next) => {
   const { url, cookie, pdfOptions } = ctx.request.query
-  const filename = ctx.request.query.filename || 'newpdf'
+  const filename = encodeURIComponent(ctx.request.query.filename || 'newpdf')
   const hostname = nodeUrl.parse(url).hostname
-  const pdfBuffer = await createPdf(url, {
+  const pdfBuffer = await createPdfBuffer(url, {
     cookie: findCookie(ctx, hostname, cookie),
     pdfOptions
   })
@@ -38,7 +50,7 @@ const app = new Koa()
 app.use(koaBody())
 app.use(router.routes())
 app.listen(19898, () => {
-  console.log('server started')
+  console.log(`server is started at 19898`)
 })
 
 function findCookie (ctx, hostname, cookie) {
