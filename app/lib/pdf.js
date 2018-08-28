@@ -3,6 +3,8 @@ const path = require('path')
 const fs = require('fs')
 const queueExecAsyncFunc = require('./queue')
 const pdfMerge = require('pdf-merge')
+const tmp = require('tmp')
+const shellescape = require('shell-escape')
 
 const MAX_QUEUE_LEN = 5
 
@@ -62,7 +64,8 @@ async function createPdfFile (url, { cookie, pdfOptions = {} }) {
   const page = await browser.open(url, {
     cookie
   })
-  const filename = path.join(__dirname, '../../static/', getUniqueFilename() + '.pdf')
+  // const filename = path.join(__dirname, '../../static/', getUniqueFilename() + '.pdf')
+  const filename = shellescape([tmp.tmpNameSync()])
   await page.pdf({ path: filename, ...options })
   return filename
 }
