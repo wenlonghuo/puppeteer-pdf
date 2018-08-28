@@ -5,6 +5,7 @@ const queueExecAsyncFunc = require('./queue')
 const pdfMerge = require('pdf-merge')
 
 const MAX_QUEUE_LEN = 5
+const tempDir = process.env.TMPDIR
 
 const defaultPdfOptions = {
   displayHeaderFooter: true,
@@ -62,7 +63,7 @@ async function createPdfFile (url, { cookie, pdfOptions = {} }) {
   const page = await browser.open(url, {
     cookie
   })
-  const filename = path.join(__dirname, '../../static/', getUniqueFilename() + '.pdf')
+  const filename = path.join(tempDir, getUniqueFilename() + '.pdf')
   await page.pdf({ path: filename, ...options })
   return filename
 }
