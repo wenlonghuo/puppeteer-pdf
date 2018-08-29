@@ -8,7 +8,7 @@ USER root
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="TRUE"
 
 RUN rm -rf ./node_modules/ \
-  && npm install --production
+  && npm install --production && npm cache clean --force
 
 USER pptruser
 # Default to port 80 for node, and 5858 or 9229 for debug
