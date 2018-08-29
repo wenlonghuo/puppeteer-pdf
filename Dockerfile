@@ -1,4 +1,4 @@
-FROM wenlonghuo/puppeteer-pdf-base:latest
+FROM wenlonghuo/puppeteer-pdf-base:1.0.0
 
 # COPY package.json /app/package.json
 COPY . /app
