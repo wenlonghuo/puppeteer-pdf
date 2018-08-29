@@ -1,11 +1,13 @@
-FROM alekzonder/puppeteer:1
+FROM wenlonghuo/puppeteer-pdf-base:latest
 
 # COPY package.json /app/package.json
 COPY . /app
 
 USER root
-RUN apt-get update && apt-get install -y pdftk \
-  && rm -rf ./node_modules/ \
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="TRUE"
+
+RUN rm -rf ./node_modules/ \
   && npm install --production
 
 USER pptruser

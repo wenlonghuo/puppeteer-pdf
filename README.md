@@ -12,5 +12,6 @@ https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10
 
 ```
 docker pull wenlonghuo/puppeteer-pdf
-docker run -i -t -p 19898:19898 --restart=always wenlonghuo/puppeteer-pdf
+docker run -i -t -p 19898:19898 --privileged=true wenlonghuo/puppeteer-pdf
+docker run -i -t -p 19898:19898 --restart=always --privileged=true wenlonghuo/puppeteer-pdf
 ```

@@ -6,6 +6,7 @@ class Browser {
     this.option = {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       ignoreHTTPSErrors: true,
+      executablePath: process.env.CHROME_PUPPETEER_PATH || undefined,
       dumpio: false,
       ...option
     }

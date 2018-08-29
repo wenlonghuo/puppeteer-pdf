@@ -1,6 +1,7 @@
 {
   "name": "puppeteer-pdf",
   "version": "1.0.0",
+  "repository": "https://github.com/wenlonghuo/puppeteer-pdf",
   "description": "",
   "main": "app/index.js",
   "scripts": {
