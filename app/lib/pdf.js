@@ -48,6 +48,7 @@ async function createPdfBuffer (url, { cookie, pdfOptions = {} }) {
     cookie
   })
   const buff = await page.pdf({ ...options })
+  await page.close()
   return buff
 }
 
@@ -67,6 +68,7 @@ async function createPdfFile (url, { cookie, pdfOptions = {} }) {
   // const filename = path.join(__dirname, '../../static/', getUniqueFilename() + '.pdf')
   const filename = shellescape([tmp.tmpNameSync()])
   await page.pdf({ path: filename, ...options })
+  await page.close()
   return filename
 }
 
