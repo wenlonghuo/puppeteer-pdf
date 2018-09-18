@@ -2,6 +2,13 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const router = require('koa-router')()
 const nodeUrl = require('url')
+const send = require('koa-send')
+const path = require('path')
+
+const staticOptions = {
+  root: path.join(__dirname, '../example/dist'),
+  index: 'index.html'
+}
 
 const pdf = require('./lib/pdf.js')
 const createPdfBuffer = pdf.createPdfBuffer
@@ -49,6 +56,16 @@ router.get('/pdf/create/download', async (ctx, next) => {
 const app = new Koa()
 app.use(koaBody())
 app.use(router.routes())
+
+// 静态文件服务，提供示例
+app.use(async (ctx, next) => {
+  if (ctx.path.indexOf('/example') !== 0 && ctx.path !== '/') {
+    return next()
+  }
+  const dir = ctx.path.slice(8) || '/'
+  await send(ctx, dir, staticOptions)
+})
+
 app.listen(19898, () => {
   console.log(`server is started at 19898`)
 })

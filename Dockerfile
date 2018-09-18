@@ -7,7 +7,7 @@ USER root
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="TRUE"
 
-RUN rm -rf ./node_modules/ \
+RUN rm -rf ./node_modules/ && rm -rf ./example/node_modules/\
   && npm install --production && npm cache clean --force
 
 USER pptruser
